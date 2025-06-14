@@ -7,10 +7,10 @@
     <RootNamespace>nebulae.dotPoly1305</RootNamespace>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
       <PackageId>nebulae.dotPoly1305</PackageId>
-      <Version>0.1.2</Version>
+      <Version>0.1.3</Version>
       <Authors>Robert C. Horvath III</Authors>
       <Company>Nebulae Foundation LLC</Company>
-      <Description>High-performance Poly1305 wrapper for .NET with native AVX2-optimized bindings.</Description>
+      <Description>High-performance Poly1305 wrapper for .NET with native SIMD-optimized bindings.</Description>
       <PackageTags>poly1305 hashing crypto native AOT encryption authentication message digest keying</PackageTags>
       <RepositoryUrl>https://github.com/nebulaeonline/dotPoly1305</RepositoryUrl>
       <RepositoryType>git</RepositoryType>

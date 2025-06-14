@@ -4,7 +4,7 @@ A minimal, fast, cross-platform Poly1305 wrapper for .NET applications.
 
 This library provides access to the Poly1305 message authentication code (MAC) algorithm, which is often used in conjunction with the ChaCha20 cipher for authenticated encryption. It is designed to be lightweight and efficient, making it suitable for high-performance applications that require secure message authentication.
 
-The underlying optimized implementation is taken verbatim from BoringSSL maintained by Google, ensuring that it is both efficient and secure.
+The underlying optimized code is from BoringSSL maintained by Google, ensuring that it is both efficient and secure.
 
 Tests are included and available in the Github repo.
 
@@ -36,7 +36,7 @@ Using the byte[] API:
 
 ```csharp
 
-using Nebulae.Crypto;
+using Nebulae.dotPoly1305;
 
 Poly1305.Init(); // Initialize the Poly1305 context
 
@@ -55,7 +55,7 @@ Using the ReadOnlySpan<byte> API:
 
 ```csharp
 
-using Nebulae.Crypto;
+using Nebulae.dotPoly1305;
 
 Poly1305.Init(); // Initialize the Poly1305 context
 
