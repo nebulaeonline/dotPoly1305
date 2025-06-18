@@ -36,7 +36,7 @@ Using the byte[] API:
 
 ```csharp
 
-using Nebulae.dotPoly1305;
+using nebulae.dotPoly1305;
 
 Poly1305.Init(); // Initialize the Poly1305 context
 
@@ -55,7 +55,7 @@ Using the ReadOnlySpan<byte> API:
 
 ```csharp
 
-using Nebulae.dotPoly1305;
+using nebulae.dotPoly1305;
 
 Poly1305.Init(); // Initialize the Poly1305 context
 
