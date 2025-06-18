@@ -15,7 +15,7 @@ Tests are included and available in the Github repo.
 ## Features
 
 - **Cross-platform**: Works on Windows, Linux, and macOS (x64 & Apple Silicon).
-- **High performance**: Optimized for speed, leveraging native code SIMD-enabled code.
+- **High performance**: Optimized for speed, leveraging native SIMD-enabled code.
 - **Easy to use**: Simple API for encryption and decryption.
 - **Secure**: Uses BoringSSL's implementation, which is widely trusted in the industry.
 - **Minimal dependencies**: No external dependencies required (all are included), making it lightweight and easy to integrate.
