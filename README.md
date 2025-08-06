@@ -25,7 +25,6 @@ Tests are included and available in the Github repo.
 ## Requirements
 
 - .NET 8.0 or later
-- AVX2 capable x86_64 _CPU (or Apple Silicon)
 - Windows x64, Linux x64, or macOS (x64 & Apple Silicon)
 
 ## Usage

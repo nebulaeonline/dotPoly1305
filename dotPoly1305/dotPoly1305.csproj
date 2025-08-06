@@ -7,7 +7,7 @@
     <RootNamespace>nebulae.dotPoly1305</RootNamespace>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
       <PackageId>nebulae.dotPoly1305</PackageId>
-      <Version>0.1.4</Version>
+      <Version>0.1.6</Version>
       <Authors>Robert C. Horvath III</Authors>
       <Company>Nebulae Foundation LLC</Company>
       <Description>High-performance Poly1305 wrapper for .NET with native SIMD-optimized bindings.</Description>
