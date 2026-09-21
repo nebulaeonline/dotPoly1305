@@ -25,7 +25,8 @@ Tests are included and available in the Github repo.
 ## Requirements
 
 - .NET 8.0 or later
-- Windows x64, Linux x64, or macOS (x64 & Apple Silicon)
+- Supported native RIDs at the moment: Windows x64, Linux x64, macOS x64, and macOS Apple Silicon
+- Windows ARM64 and Linux ARM64 are intentionally excluded until the native library is rebuilt and validated for those targets
 
 ## Usage
 
@@ -37,7 +38,8 @@ Using the byte[] API:
 
 using nebulae.dotPoly1305;
 
-Poly1305.Init(); // Initialize the Poly1305 context
+// no longer necessary, but kept for backward compatibility
+// Poly1305.Init(); // Initialize the Poly1305 context
 
 byte[] key = new byte[32];       // One-time 32-byte key
 byte[] message = Encoding.ASCII.GetBytes("hello world");
@@ -53,10 +55,6 @@ Console.WriteLine(Convert.ToHexString(tag));
 Using the ReadOnlySpan<byte> API:
 
 ```csharp
-
-using nebulae.dotPoly1305;
-
-Poly1305.Init(); // Initialize the Poly1305 context
 
 Span<byte> key = stackalloc byte[32];  // 32-byte one-time key
 Span<byte> tag = stackalloc byte[16];  // 16-byte tag

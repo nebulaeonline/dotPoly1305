@@ -1,54 +1,63 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace nebulae.dotPoly1305
+namespace nebulae.dotPoly1305;
+
+internal static class Poly1305Library
 {
-    internal static class Poly1305Library
+    private static bool _isLoaded;
+
+    internal static void Init()
     {
-        private static bool _isLoaded;
+        if (_isLoaded)
+            return;
 
-        internal static void Init()
+        NativeLibrary.SetDllImportResolver(typeof(Poly1305Library).Assembly, Resolve);
+
+        _isLoaded = true;
+    }
+
+    private static IntPtr Resolve(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+    {
+        if (libraryName != "poly1305")
+            return IntPtr.Zero;
+
+        var libName = GetPlatformLibraryName();
+        var assemblyDir = Path.GetDirectoryName(typeof(Poly1305Library).Assembly.Location)!;
+        var fullPath = Path.Combine(assemblyDir, libName);
+
+        if (!File.Exists(fullPath))
+            throw new DllNotFoundException($"Could not find native Poly1305 library at {fullPath}");
+
+        return NativeLibrary.Load(fullPath);
+    }
+
+    private static string GetPlatformLibraryName()
+    {
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
-            if (_isLoaded)
-                return;
+            if (RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
+                throw new PlatformNotSupportedException("Windows ARM64 is not currently supported; rebuild the native Poly1305 library for this RID.");
 
-            NativeLibrary.SetDllImportResolver(typeof(Poly1305Library).Assembly, Resolve);
-
-            _isLoaded = true;
+            return Path.Combine("runtimes", "win-x64", "native", "poly1305.dll");
         }
 
-        private static IntPtr Resolve(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
-            if (libraryName != "poly1305")
-                return IntPtr.Zero;
+            if (RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
+                throw new PlatformNotSupportedException("Linux ARM64 is not currently supported; rebuild the native Poly1305 library for this RID.");
 
-            var libName = GetPlatformLibraryName();
-            var assemblyDir = Path.GetDirectoryName(typeof(Poly1305Library).Assembly.Location)!;
-            var fullPath = Path.Combine(assemblyDir, libName);
-
-            if (!File.Exists(fullPath))
-                throw new DllNotFoundException($"Could not find native Poly1305 library at {fullPath}");
-
-            return NativeLibrary.Load(fullPath);
+            return Path.Combine("runtimes", "linux-x64", "native", "libpoly1305.so");
         }
 
-        private static string GetPlatformLibraryName()
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return Path.Combine("runtimes", "win-x64", "native", "poly1305.dll");
+            if (RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
+                return Path.Combine("runtimes", "osx-arm64", "native", "libpoly1305.dylib");
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return Path.Combine("runtimes", "linux-x64", "native", "libpoly1305.so");
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                if (RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
-                    return Path.Combine("runtimes", "osx-arm64", "native", "libpoly1305.dylib");
-
-                return Path.Combine("runtimes", "osx-x64", "native", "libpoly1305.dylib");
-            }
-
-            throw new PlatformNotSupportedException("Unsupported platform");
+            return Path.Combine("runtimes", "osx-x64", "native", "libpoly1305.dylib");
         }
+
+        throw new PlatformNotSupportedException("Unsupported platform");
     }
 }
