@@ -4,6 +4,10 @@ A minimal, fast, cross-platform Poly1305 wrapper for .NET applications.
 
 This library provides access to the Poly1305 message authentication code (MAC) algorithm, which is often used in conjunction with the ChaCha20 cipher for authenticated encryption. It is designed to be lightweight and efficient, making it suitable for high-performance applications that require secure message authentication.
 
+See [dotChaCha20 Repository](https://github.com/nebulaeonline/dotChaCha20) for a companion library that implements the ChaCha20 cipher.
+
+There is also a library that integrates both ChaCha20 and Poly1305 for authenticated encryption: [dotAead Repository](https://github.com/nebulaeonline/dotAead).
+
 The underlying optimized code is from BoringSSL maintained by Google, ensuring that it is both efficient and secure.
 
 Tests are included and available in the Github repo.
@@ -14,7 +18,7 @@ Tests are included and available in the Github repo.
 
 ## Features
 
-- **Cross-platform**: Works on Windows, Linux, and macOS (x64 & Apple Silicon).
+- **Cross-platform**: Works on Windows, Linux, and macOS (both x64 & arm64 on all platforms).
 - **High performance**: Optimized for speed, leveraging native SIMD-enabled code.
 - **Easy to use**: Simple API for encryption and decryption.
 - **Secure**: Uses BoringSSL's implementation, which is widely trusted in the industry.
@@ -25,8 +29,7 @@ Tests are included and available in the Github repo.
 ## Requirements
 
 - .NET 8.0 or later
-- Supported native RIDs at the moment: Windows x64, Linux x64, macOS x64, and macOS Apple Silicon
-- Windows ARM64 and Linux ARM64 are intentionally excluded until the native library is rebuilt and validated for those targets
+- Supported native RIDs at the moment: Windows x64 & arm64, Linux x64 & arm64, and macOS x64 & arm64
 
 ## Usage
 
@@ -37,9 +40,6 @@ Using the byte[] API:
 ```csharp
 
 using nebulae.dotPoly1305;
-
-// no longer necessary, but kept for backward compatibility
-// Poly1305.Init(); // Initialize the Poly1305 context
 
 byte[] key = new byte[32];       // One-time 32-byte key
 byte[] message = Encoding.ASCII.GetBytes("hello world");
@@ -55,6 +55,8 @@ Console.WriteLine(Convert.ToHexString(tag));
 Using the ReadOnlySpan<byte> API:
 
 ```csharp
+
+using nebulae.dotPoly1305;
 
 Span<byte> key = stackalloc byte[32];  // 32-byte one-time key
 Span<byte> tag = stackalloc byte[16];  // 16-byte tag
